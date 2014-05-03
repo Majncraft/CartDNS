@@ -89,7 +89,9 @@ public class CartDNS extends JavaPlugin{
 					res=s.executeQuery("SELECT * FROM `cart_dns` WHERE `ip`='"+safeIP(d[2])+"'");
 					if(!res.next())
 					{
-						s.executeUpdate("INSERT INTO `cart_dns` (`ip`,`name`) VALUES('"+safeIP(d[2])+"','"+d[1]+"'");
+						String ds="INSERT INTO `cart_dns` (`ip`,`name`) VALUES('"+safeIP(d[2])+"','"+d[1]+"'";
+						this.getLogger().info("sql: "+ds);
+						s.executeUpdate(ds);
 						a.sendMessage("[CartDNS] Added");
 					}
 					else
