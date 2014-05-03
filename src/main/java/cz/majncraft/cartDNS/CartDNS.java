@@ -39,7 +39,7 @@ public class CartDNS extends JavaPlugin{
 			else
 			{
 				this.getLogger().info("Table cart_dns dont exist. Creating new one.");
-				if(!s.execute("create table cart_dns (ip varchar(11) not null primary key,name varchar(20) not null unique key)"))
+				if(!s.execute("create table cart_dns (ip varchar(11) not null primary key,username varchar(20) not null,uuid varchar(128) not null,name varchar(20) not null unique key)"))
 				{
 					this.getLogger().info("Table cart_dns cannot be created.");
 					err=true; return;
@@ -89,7 +89,13 @@ public class CartDNS extends JavaPlugin{
 					res=s.executeQuery("SELECT * FROM `cart_dns` WHERE `ip`='"+safeIP(d[2])+"'");
 					if(!res.next())
 					{
-						String ds="INSERT INTO `cart_dns` (`ip`,`name`) VALUES('"+safeIP(d[2])+"','"+getName(d,1,1)+"')";
+						String uu="Console",user="Console";
+						if((a instanceof Player))
+						{
+							uu=((Player)a).getUniqueId().toString();
+							user=((Player)a).getDisplayName();
+						}
+						String ds="INSERT INTO `cart_dns` (`ip`,`name`,`username`,`uuid`) VALUES('"+safeIP(d[2])+"','"+getName(d,1,1)+"','"+user+"','"+uu+"')";
 						s.executeUpdate(ds);
 						a.sendMessage("[CartDNS] Added");
 					}
@@ -118,13 +124,15 @@ public class CartDNS extends JavaPlugin{
 				}
 				else
 				{
-					a.sendMessage("[CartDNS]Name: "+ress.getString("name")+"		IP: "+ress.getString("ip"));
+					a.sendMessage("[CartDNS]Name: "+ress.getString("name")+"	IP: "+ress.getString("ip"));
+					a.sendMessage("[CartDNS]Author: "+ress.getString("username"));
 				}
 				return true;
 			}
 			else
 			{
-				a.sendMessage("[CartDNS]Name: "+ress.getString("name")+"		IP: "+ress.getString("ip"));
+				a.sendMessage("[CartDNS]Name: "+ress.getString("name")+"	IP: "+ress.getString("ip"));
+				a.sendMessage("[CartDNS]Author: "+ress.getString("username"));
 				return true;
 			}
 			case "remove":
