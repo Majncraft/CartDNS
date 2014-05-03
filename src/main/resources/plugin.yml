@@ -1,0 +1,18 @@
+name: ${project.name}
+version: ${project.version}
+author: welfare93
+website: https://github.com/Majncraft/CartDNS
+main: cz.majncraft.cartDNS.CartDNS
+commands:
+  dest:
+    aliases: [destination]
+    permission: cartdns.user   
+  dns:
+    aliases: [cartdns]
+    permission: cartdns.user
+permissions:
+  cartdns.manager:
+    description: Gives access to all op commands
+  cartdns.user:
+    description: Allows you to use dns
+    default: true
