@@ -244,7 +244,7 @@ public class CartDNS extends JavaPlugin{
 	{
 		if(input.toLowerCase().contains(" OR ") || input.toLowerCase().contains(" AND "))
 			return false;
-		Pattern p = Pattern.compile("[^a-Z0-9 ]", Pattern.CASE_INSENSITIVE);
+		Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
 		Matcher m = p.matcher(input);
 		if(m.find())
 			return false;
