@@ -26,7 +26,7 @@ public class CartDNS extends JavaPlugin{
 	@Override
 	public void onLoad()
 	{
-		
+		firstrun();
 		mysql = new MySQL(this, host, port, database, user, password);
 		con=mysql.openConnection();
 		try {
