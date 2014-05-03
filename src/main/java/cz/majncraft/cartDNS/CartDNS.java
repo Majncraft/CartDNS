@@ -82,14 +82,14 @@ public class CartDNS extends JavaPlugin{
 					a.sendMessage("[CartDNS]Wrong IP/Name or not enought args.");
 					return true;
 				}
-				ResultSet res=s.executeQuery("SELECT * FROM `cart_dns` WHERE LOWER(`name`)='"+d[1].toLowerCase()+"'");
+				ResultSet res=s.executeQuery("SELECT * FROM `cart_dns` WHERE LOWER(`name`)='"+getName(d,1,1).toLowerCase()+"'");
 				
 				if(!res.next())
 				{
 					res=s.executeQuery("SELECT * FROM `cart_dns` WHERE `ip`='"+safeIP(d[2])+"'");
 					if(!res.next())
 					{
-						String ds="INSERT INTO `cart_dns` (`ip`,`name`) VALUES('"+safeIP(d[2])+"','"+d[1]+"')";
+						String ds="INSERT INTO `cart_dns` (`ip`,`name`) VALUES('"+safeIP(d[2])+"','"+getName(d,1,1)+"')";
 						s.executeUpdate(ds);
 						a.sendMessage("[CartDNS] Added");
 					}
@@ -106,7 +106,7 @@ public class CartDNS extends JavaPlugin{
 				}
 				break;
 			case "lookup": 
-			ResultSet ress=s.executeQuery("SELECT * FROM `cart_dns` WHERE LOWER(`name`)='"+d[1].toLowerCase()+"'");
+			ResultSet ress=s.executeQuery("SELECT * FROM `cart_dns` WHERE LOWER(`name`)='"+getName(d,1,0).toLowerCase()+"'");
 			if(!ress.next())
 			{
 				if(safeIP(d[1])=="")
@@ -128,11 +128,11 @@ public class CartDNS extends JavaPlugin{
 				return true;
 			}
 			case "remove":
-				ResultSet resss=s.executeQuery("SELECT * FROM `cart_dns` WHERE LOWER(`name`)='"+d[1].toLowerCase()+"'");
+				ResultSet resss=s.executeQuery("SELECT * FROM `cart_dns` WHERE LOWER(`name`)='"+getName(d,1,1).toLowerCase()+"'");
 				
 				if(resss.next())
 				{
-					s.executeUpdate("DELETE FROM `cart_dns` WHERE LOWER(`name`)='"+d[1].toLowerCase()+"'");
+					s.executeUpdate("DELETE FROM `cart_dns` WHERE LOWER(`name`)='"+getName(d,1,1).toLowerCase()+"'");
 					a.sendMessage("[CartDNS] Deleted");
 					return true;
 				}
@@ -191,10 +191,10 @@ public class CartDNS extends JavaPlugin{
 		try {
 		if(!safeName(d[0]))
 			{a.sendMessage("No hacking this time"); return true;}
-		ResultSet res=s.executeQuery("SELECT * FROM `cart_dns` WHERE LOWER(`name`)='"+d[0].toLowerCase()+"'");
+		ResultSet res=s.executeQuery("SELECT * FROM `cart_dns` WHERE LOWER(`name`)='"+getName(d,0,0).toLowerCase()+"'");
 		if(!res.next())
 		{
-			a.sendMessage("[DNS] No IP for hostname "+d[0]);
+			a.sendMessage("[DNS] No IP for hostname "+getName(d,0,0));
 			return true;
 		}
 		else
@@ -252,6 +252,13 @@ public class CartDNS extends JavaPlugin{
 		return true;
 	}
 	private String host,user,database,port,password;
+	private String getName(String[] input, int s, int e)
+	{
+		String output=input[s];
+		for(int i=s+1;i<input.length-e;i++)
+			output+=" "+input[i];
+		return output;
+	}
 	private void firstrun()
     {
     	File f = new File(this.getDataFolder() + "/");
