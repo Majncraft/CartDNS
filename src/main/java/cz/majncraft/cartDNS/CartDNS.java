@@ -155,8 +155,8 @@ public class CartDNS extends JavaPlugin{
 		}
 		else if(d.length>=1 && d[0]=="list")
 		{
-			int listc=0;
-			if(d[1].matches("-?\\d+"))
+			int listc=1;
+			if(d.length>=2 && d[1].matches("-?\\d+"))
 			{
 				listc=Integer.parseInt(d[1]);
 			}
