@@ -39,7 +39,7 @@ public class CartDNS extends JavaPlugin{
 			else
 			{
 				this.getLogger().info("Table cart_dns dont exist. Creating new one.");
-				if(!s.execute("create table users (ip varchar(11) not null primary key,name varchar(20) not null unique key)"))
+				if(!s.execute("create table cart_dns (ip varchar(11) not null primary key,name varchar(20) not null unique key)"))
 				{
 					this.getLogger().info("Table cart_dns cannot be created.");
 					err=true; return;
