@@ -93,7 +93,7 @@ public class CartDNS extends JavaPlugin{
 						if((a instanceof Player))
 						{
 							uu=((Player)a).getUniqueId().toString();
-							user=((Player)a).getDisplayName();
+							user=((Player)a).getName();
 						}
 						String ds="INSERT INTO `cart_dns` (`ip`,`name`,`username`,`uuid`) VALUES('"+safeIP(d[2])+"','"+getName(d,1,1)+"','"+user+"','"+uu+"')";
 						s.executeUpdate(ds);
@@ -155,7 +155,7 @@ public class CartDNS extends JavaPlugin{
 		
 	}
 	}
-	if(c.toLowerCase().equals("dns") && (a.hasPermission("cartdns.user")|| a.hasPermission("cartdns.user")))
+	if(c.toLowerCase().equals("dns") && (a.hasPermission("cartdns.manager")|| a.hasPermission("cartdns.user")))
 	{
 		if(d.length==0)
 		{
@@ -178,7 +178,7 @@ public class CartDNS extends JavaPlugin{
 					listc*=10;
 				do
 				{
-					a.sendMessage(listc+": "+res.getString("ip")+"		"+res.getString("name"));
+					a.sendMessage(listc+": "+res.getString("ip")+"    "+res.getString("name"));
 					listc++;
 				}
 				while(res.next());
@@ -212,8 +212,8 @@ public class CartDNS extends JavaPlugin{
 		}
 		else
 		{
-				((Player)a).performCommand("/sendto "+res.getString("name"));
-			return true;
+				((Player)a).performCommand("mego "+res.getString("ip"));
+				return true;
 		}
 		} catch (SQLException e) {
 			this.getLogger().info("SQL error code: "+e.getErrorCode());
@@ -258,7 +258,7 @@ public class CartDNS extends JavaPlugin{
 	{
 		if(input.toLowerCase().contains(" OR ") || input.toLowerCase().contains(" AND "))
 			return false;
-		Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+		Pattern p = Pattern.compile("[^a-z0-9\\s]", Pattern.CASE_INSENSITIVE);
 		Matcher m = p.matcher(input);
 		if(m.find())
 			return false;
