@@ -138,7 +138,10 @@ public class CartDNS extends JavaPlugin{
 				break;
 			}
 		}
-		catch (Exception e) {
+		catch (SQLException e) {
+			this.getLogger().info("SQL error code: "+e.getErrorCode());
+			this.getLogger().info("SQL error msg: "+e.getMessage());
+			this.getLogger().info("SQL error state: "+e.getSQLState());
 		}
 		
 	}
@@ -199,8 +202,9 @@ public class CartDNS extends JavaPlugin{
 			return true;
 		}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			this.getLogger().info("SQL error code: "+e.getErrorCode());
+			this.getLogger().info("SQL error msg: "+e.getMessage());
+			this.getLogger().info("SQL error state: "+e.getSQLState());
 		}
 		
 	}
