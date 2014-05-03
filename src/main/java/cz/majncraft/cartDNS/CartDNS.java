@@ -39,9 +39,7 @@ public class CartDNS extends JavaPlugin{
 			else
 			{
 				this.getLogger().info("Table cart_dns dont exist. Creating new one.");
-				res=s.executeQuery("create table users (ip varchar(11) not null primary key,name varchar(20) not null unique key)");
-				res=s.executeQuery("show tables like 'cart_dns'");
-				if(!res.next())
+				if(!s.execute("create table users (ip varchar(11) not null primary key,name varchar(20) not null unique key)"))
 				{
 					this.getLogger().info("Table cart_dns cannot be created.");
 					err=true; return;
@@ -79,9 +77,9 @@ public class CartDNS extends JavaPlugin{
 					a.sendMessage("[CartDNS]No hacking this time");
 					return true;
 				}
-				else if(d.length<3 || safeIP(d[2])=="")
+				else if(d.length<3 || safeIP(d[2])=="" || d[1].length()>20)
 				{
-					a.sendMessage("[CartDNS]Wrong IP or not enought args.");
+					a.sendMessage("[CartDNS]Wrong IP/Name or not enought args.");
 					return true;
 				}
 				ResultSet res=s.executeQuery("SELECT * FROM `cart_dns` WHERE LOWER(`name`)='"+d[1].toLowerCase()+"'");
@@ -91,7 +89,8 @@ public class CartDNS extends JavaPlugin{
 					res=s.executeQuery("SELECT * FROM `cart_dns` WHERE `ip`='"+safeIP(d[2])+"'");
 					if(!res.next())
 					{
-						res=s.executeQuery("INSERT INTO `cart_dns` VALUES('"+safeIP(d[2])+"','"+d[1]+"'");
+						s.executeUpdate("INSERT INTO `cart_dns` VALUES('"+safeIP(d[2])+"','"+d[1]+"'");
+						a.sendMessage("[CartDNS] Added");
 					}
 					else
 					{
@@ -132,7 +131,7 @@ public class CartDNS extends JavaPlugin{
 				
 				if(resss.next())
 				{
-					s.executeQuery("DELETE FROM `cart_dns` WHERE LOWER(`name`)='"+d[1].toLowerCase()+"'");
+					s.executeUpdate("DELETE FROM `cart_dns` WHERE LOWER(`name`)='"+d[1].toLowerCase()+"'");
 					a.sendMessage("[CartDNS] Deleted");
 					return true;
 				}
