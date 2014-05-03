@@ -188,8 +188,13 @@ public class CartDNS extends JavaPlugin{
 			a.sendMessage("Only players can use /dest");
 			return true;
 		}
+		if(d.length==0)
+		{
+			a.sendMessage("[DNS] Usage: /dest [name]");
+			return true;
+		}
 		try {
-		if(!safeName(d[0]))
+		if(!safeName(getName(d,0,0)))
 			{a.sendMessage("No hacking this time"); return true;}
 		ResultSet res=s.executeQuery("SELECT * FROM `cart_dns` WHERE LOWER(`name`)='"+getName(d,0,0).toLowerCase()+"'");
 		if(!res.next())
