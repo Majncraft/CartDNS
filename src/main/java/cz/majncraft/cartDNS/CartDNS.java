@@ -222,6 +222,14 @@ public class CartDNS extends JavaPlugin{
 		}
 		
 	}
+	else if(c.toLowerCase().equals("dynmapshow") && (a.hasPermission("cartdns.showme")))
+	{
+		if(a instanceof Player)
+		{
+			Player bb=(Player)a;
+			bb.chat("http://map.majncraft.cz/?worldname="+bb.getWorld().getName()+"&zoom=8&x="+bb.getLocation().getBlockX()+"&y=64&z="+bb.getLocation().getBlockZ());
+		}
+	}
 	return false;
 }
 	private String safeIP(String input)
