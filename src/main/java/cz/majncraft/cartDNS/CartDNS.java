@@ -241,7 +241,7 @@ public class CartDNS extends JavaPlugin{
 		{
 			if(Character.isDigit(c))
 			{
-				if(cnt>=3)
+				if(cnt>=5)
 					return "";
 				else
 					output+=c;
