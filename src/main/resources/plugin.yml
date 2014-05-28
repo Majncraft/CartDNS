@@ -10,8 +10,8 @@ commands:
   dns:
     aliases: [cartdns]
     permission: cartdns.user   
-  dynmapshow:
-    aliases: [showdynmap]
+  showmap:
+    aliases: [showme]
     permission: cartdns.showme
 permissions:
   cartdns.manager:
