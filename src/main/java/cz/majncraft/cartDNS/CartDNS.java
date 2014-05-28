@@ -227,7 +227,7 @@ public class CartDNS extends JavaPlugin{
 		}
 		
 	}
-	else if(c.toLowerCase().equals("dynmapshow") && (a.hasPermission("cartdns.showme")))
+	else if(c.toLowerCase().equals("showmap") && (a.hasPermission("cartdns.showme")))
 	{
 		if(a instanceof Player)
 		{
