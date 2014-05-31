@@ -68,14 +68,14 @@ public class CartDNS extends JavaPlugin{
 			a.sendMessage("/dns list [page] - list all DNS records.");
 			return true;
 		}
-		else if(d.length>=2)
+		else if(d.length>=1)
 		{
 		// Strip diacritics from Station name
-		d[1] = Normalizer.normalize(d[1], Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
 			try{
 			switch(d[0])
 			{
 			case "create":
+				d[1] = Normalizer.normalize(d[1], Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
 				if(!safeName(d[1]))
 				{
 					a.sendMessage("[CartDNS] No hacking this time");
@@ -115,31 +115,8 @@ public class CartDNS extends JavaPlugin{
 					return true;
 				}
 				break;
-			case "lookup": 
-			ResultSet ress=s.executeQuery("SELECT * FROM `cart_dns` WHERE LOWER(`name`)='"+getName(d,1,0).toLowerCase()+"'");
-			if(!ress.next())
-			{
-				if(safeIP(d[1])=="")
-					{a.sendMessage("[CartDNS] No dns with this name/ip"); return true;}
-				ress=s.executeQuery("SELECT * FROM `cart_dns` WHERE `ip`='"+safeIP(d[1])+"'");
-				if(!ress.next())
-				{
-					a.sendMessage("[CartDNS] No dns with this name/ip");
-				}
-				else
-				{
-					a.sendMessage("[CartDNS] Name: "+ress.getString("name")+"	IP: "+ress.getString("ip"));
-					a.sendMessage("[CartDNS] Author: "+ress.getString("username"));
-				}
-				return true;
-			}
-			else
-			{
-				a.sendMessage("[CartDNS] Name: "+ress.getString("name")+"	IP: "+ress.getString("ip"));
-				a.sendMessage("[CartDNS] Author: "+ress.getString("username"));
-				return true;
-			}
 			case "remove":
+				d[1] = Normalizer.normalize(d[1], Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
 				ResultSet resss=s.executeQuery("SELECT * FROM `cart_dns` WHERE LOWER(`name`)='"+getName(d,1,1).toLowerCase()+"'");
 				
 				if(resss.next())
@@ -149,6 +126,36 @@ public class CartDNS extends JavaPlugin{
 					return true;
 				}
 				break;
+			default:
+				// HAXX, if not /dns lookup, then make [name] first parameter
+				if (d[0].equalsIgnoreCase("lookup")) {
+					if (d.length==1) return false;
+					d[0] = d[1];
+				}
+				d[0] = Normalizer.normalize(d[0], Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+				ResultSet ress=s.executeQuery("SELECT * FROM `cart_dns` WHERE LOWER(`name`)='"+getName(d,0,1).toLowerCase()+"'");
+				if(!ress.next())
+				{
+					if(safeIP(d[0])=="")
+						{a.sendMessage("[CartDNS] No dns with this name/ip"); return true;}
+					ress=s.executeQuery("SELECT * FROM `cart_dns` WHERE `ip`='"+safeIP(d[0])+"'");
+					if(!ress.next())
+					{
+						a.sendMessage("[CartDNS] No dns with this name/ip");
+					}
+					else
+					{
+						a.sendMessage("[CartDNS] Name: "+ress.getString("name")+" IP: "+ress.getString("ip"));
+						a.sendMessage("[CartDNS] Author: "+ress.getString("username"));
+					}
+					return true;
+				}
+				else
+				{
+					a.sendMessage("[CartDNS] Name: "+ress.getString("name")+" IP: "+ress.getString("ip"));
+					a.sendMessage("[CartDNS] Author: "+ress.getString("username"));
+					return true;
+				}
 			}
 		}
 		catch (SQLException e) {
@@ -319,6 +326,5 @@ public class CartDNS extends JavaPlugin{
     		user=config.getString("user");
     	if(config.isSet("password"))
     		password=config.getString("password");
-    	
     }
 }
