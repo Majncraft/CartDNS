@@ -6,10 +6,10 @@ main: cz.majncraft.cartDNS.CartDNS
 commands:
   dest:
     aliases: [destination]
-    permission: cartdns.user   
+    permission: cartdns.user
   dns:
     aliases: [cartdns]
-    permission: cartdns.user   
+    permission: cartdns.user
   showmap:
     aliases: [showme]
     permission: cartdns.showme
@@ -18,7 +18,7 @@ permissions:
     description: Gives access to all op commands
   cartdns.user:
     description: Allows you to use dns
-    default: true      
+    default: true
   cartdns.showme:
     description: Allows you to use dynmapshow
     default: true
