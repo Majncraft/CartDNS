@@ -319,6 +319,5 @@ public class CartDNS extends JavaPlugin{
     		user=config.getString("user");
     	if(config.isSet("password"))
     		password=config.getString("password");
-    	
     }
 }
