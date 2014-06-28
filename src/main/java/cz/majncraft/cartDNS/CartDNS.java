@@ -57,6 +57,10 @@ public class CartDNS extends JavaPlugin{
 	}
 	@Override
 	public boolean onCommand(CommandSender a, Command b , String c, String[] d)
+	{
+		return onCommand(a,b,c,d,0);
+	}
+	public boolean onCommand(CommandSender a, Command b , String c, String[] d,int n)
 	{if(c.toLowerCase().equals("dns") && a.hasPermission("cartdns.manager"))
 	{
 		if(d.length==0)
@@ -159,9 +163,21 @@ public class CartDNS extends JavaPlugin{
 			}
 		}
 		catch (SQLException e) {
-			this.getLogger().info("SQL error code: "+e.getErrorCode());
-			this.getLogger().info("SQL error msg: "+e.getMessage());
-			this.getLogger().info("SQL error state: "+e.getSQLState());
+			if(n<2)
+				{
+					n++;
+					con=mysql.getConnection();
+					if(con==null)
+						con=mysql.openConnection();
+					return onCommand(a, b, c, d,n);
+				}
+				else
+				{
+					this.getLogger().info("SQL error code: "+e.getErrorCode());
+					this.getLogger().info("SQL error msg: "+e.getMessage());
+					this.getLogger().info("SQL error state: "+e.getSQLState());
+					return false;
+				}
 		}
 		
 	}
@@ -195,7 +211,21 @@ public class CartDNS extends JavaPlugin{
 				while(res.next());
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				if(n<2)
+				{
+					n++;
+					con=mysql.getConnection();
+					if(con==null)
+						con=mysql.openConnection();
+					return onCommand(a, b, c, d,n);
+				}
+				else
+				{
+					this.getLogger().info("SQL error code: "+e.getErrorCode());
+					this.getLogger().info("SQL error msg: "+e.getMessage());
+					this.getLogger().info("SQL error state: "+e.getSQLState());
+					return false;
+				}
 			}
 		}
 		return true;
@@ -228,9 +258,21 @@ public class CartDNS extends JavaPlugin{
 				return true;
 		}
 		} catch (SQLException e) {
-			this.getLogger().info("SQL error code: "+e.getErrorCode());
-			this.getLogger().info("SQL error msg: "+e.getMessage());
-			this.getLogger().info("SQL error state: "+e.getSQLState());
+			if(n<2)
+				{
+					n++;
+					con=mysql.getConnection();
+					if(con==null)
+						con=mysql.openConnection();
+					return onCommand(a, b, c, d,n);
+				}
+				else
+				{
+					this.getLogger().info("SQL error code: "+e.getErrorCode());
+					this.getLogger().info("SQL error msg: "+e.getMessage());
+					this.getLogger().info("SQL error state: "+e.getSQLState());
+					return false;
+				}
 		}
 		
 	}
