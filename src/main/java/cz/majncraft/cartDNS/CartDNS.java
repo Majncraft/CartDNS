@@ -279,6 +279,7 @@ public class CartDNS extends JavaPlugin{
 	else if(a instanceof Player)
 	{
 			Player bb=(Player)a;
+	}
 	return false;
 }
 	private String safeIP(String input)
