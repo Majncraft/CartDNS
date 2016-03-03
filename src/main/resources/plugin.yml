@@ -3,6 +3,7 @@ version: ${project.version}
 author: welfare93
 website: https://github.com/Majncraft/CartDNS
 main: cz.majncraft.cartDNS.CartDNS
+depend: [ByteCart]
 commands:
   dest:
     aliases: [destination]
